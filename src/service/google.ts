@@ -33,14 +33,15 @@ const getOrCreateChatSession = (chatId: string): ChatSession => {
 };
 
 export const mainGoogle = async ({
-  currentMessage,
-  chatId,
+  currentMessage, //Mensagem enviada pelo cliente ao bot
+  chatId,        //Número do cliente: 558185437940@c.us
 }: {
   currentMessage: string;
   chatId: string;
 }): Promise<string> => {
-  const chat = getOrCreateChatSession(chatId);
-  const prompt = currentMessage;
+  const chat = chatId === '558185437940@c.us' ? getOrCreateChatSession(chatId) : getOrCreateChatSession('');
+  // const chat = getOrCreateChatSession(chatId);
+  const prompt = currentMessage; //currentMessage: mensagem enviada pelo cliente
   const result = await chat.sendMessage(prompt);
   const response = await result.response;
   const text = response.text();
